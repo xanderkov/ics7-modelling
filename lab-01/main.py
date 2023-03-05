@@ -4,14 +4,14 @@ from models import Node, Numerical
 from math_methods import solve_euler, solve_picar, get_anal_solve
 
 
-def get_numerical_methods(node: Node, Numerical: Numerical):
-    eyler = solve_euler(node, 1, 0, Numerical.f_eyler)
+def get_numerical_methods(node: Node, Numerical: Numerical, x0: float, y0: float):
+    eyler = solve_euler(node, x0, y0, Numerical.f_eyler)
     pikar_1 = solve_picar(node, Numerical.approx_picar_1)
     pikar_2 = solve_picar(node, Numerical.approx_picar_2)
     pikar_3 = solve_picar(node, Numerical.approx_picar_3)
     pikar_4 = solve_picar(node, Numerical.approx_picar_4)
     x = np.arange(node.x_min, node.x_max, node.h)
-    
+
     return eyler, pikar_1, pikar_2, pikar_3, pikar_4, x
 
 
@@ -30,12 +30,14 @@ def solve_first_task(node: Node) -> PrettyTable:
     approx_picar_4 = (
         lambda u: approx_picar_3(u) + np.power(u, 4) / 25 + np.power(u, 6) / 360
     )
-    
-    numerical = Numerical(f_eyler=f_eyler, 
-                          approx_picar_1=approx_picar_1,
-                          approx_picar_2=approx_picar_2,
-                          approx_picar_3=approx_picar_3,
-                          approx_picar_4=approx_picar_4)
+
+    numerical = Numerical(
+        f_eyler=f_eyler,
+        approx_picar_1=approx_picar_1,
+        approx_picar_2=approx_picar_2,
+        approx_picar_3=approx_picar_3,
+        approx_picar_4=approx_picar_4,
+    )
 
     task.field_names = [
         "Аргумент",
@@ -48,7 +50,9 @@ def solve_first_task(node: Node) -> PrettyTable:
     ]
 
     anal = get_anal_solve(node, f_anal)
-    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(node, numerical)
+    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(
+        node, numerical, 0, 1
+    )
 
     for i in range(len(anal)):
         row = [x[i], anal[i], eyler[i]]
@@ -77,12 +81,14 @@ def solve_second_task(node: Node) -> PrettyTable:
     approx_picar_4 = (
         lambda u: approx_picar_3(u) + np.power(u, 8) / 48 + np.power(u, 10) / 240
     )
-    
-    numerical = Numerical(f_eyler=f_eyler, 
-                          approx_picar_1=approx_picar_1,
-                          approx_picar_2=approx_picar_2,
-                          approx_picar_3=approx_picar_3,
-                          approx_picar_4=approx_picar_4)
+
+    numerical = Numerical(
+        f_eyler=f_eyler,
+        approx_picar_1=approx_picar_1,
+        approx_picar_2=approx_picar_2,
+        approx_picar_3=approx_picar_3,
+        approx_picar_4=approx_picar_4,
+    )
 
     task.field_names = [
         "Аргумент",
@@ -95,7 +101,9 @@ def solve_second_task(node: Node) -> PrettyTable:
     ]
 
     anal = get_anal_solve(node, f_anal)
-    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(node, numerical)
+    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(
+        node, numerical, 0, 0.5
+    )
 
     for i in range(len(anal)):
         row = [x[i], anal[i], eyler[i]]
@@ -114,23 +122,30 @@ def solve_third_task(node: Node) -> PrettyTable:
 
     f_eyler = lambda x, u: np.power(x, 2) + np.power(u, 2)
     approx_picar_1 = lambda u: np.power(u, 3) / 3
-    approx_picar_2 = (
-        lambda u: approx_picar_1(u) + np.power(u, 7) / 63
-    )
+    approx_picar_2 = lambda u: approx_picar_1(u) + np.power(u, 7) / 63
     approx_picar_3 = (
-        lambda u: approx_picar_2(u) + 2 * np.power(u, 11) / 2079 + np.power(u, 15) / 59535
+        lambda u: approx_picar_2(u)
+        + 2 * np.power(u, 11) / 2079
+        + np.power(u, 15) / 59535
     )
     approx_picar_4 = (
-        lambda u: approx_picar_3(u) + (2 / 93555)*u**15 + (2 / 3393495)*u**19 + \
-        (2 / 2488563)*u** 19 + (2 / 86266215)*u**23 + (1 / 99411543)*u**23 + \
-        (2 / 3341878155)*u**27 + (1 / 109876902975)*u**31
+        lambda u: approx_picar_3(u)
+        + (2 / 93555) * u**15
+        + (2 / 3393495) * u**19
+        + (2 / 2488563) * u**19
+        + (2 / 86266215) * u**23
+        + (1 / 99411543) * u**23
+        + (2 / 3341878155) * u**27
+        + (1 / 109876902975) * u**31
     )
-    
-    numerical = Numerical(f_eyler=f_eyler, 
-                          approx_picar_1=approx_picar_1,
-                          approx_picar_2=approx_picar_2,
-                          approx_picar_3=approx_picar_3,
-                          approx_picar_4=approx_picar_4)
+
+    numerical = Numerical(
+        f_eyler=f_eyler,
+        approx_picar_1=approx_picar_1,
+        approx_picar_2=approx_picar_2,
+        approx_picar_3=approx_picar_3,
+        approx_picar_4=approx_picar_4,
+    )
 
     task.field_names = [
         "Аргумент",
@@ -142,7 +157,9 @@ def solve_third_task(node: Node) -> PrettyTable:
     ]
 
     eyler = solve_euler(node, 0, 0, f_eyler)
-    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(node, numerical)
+    eyler, pikar_1, pikar_2, pikar_3, pikar_4, x = get_numerical_methods(
+        node, numerical, 0, 0
+    )
 
     for i in range(len(eyler)):
         row = [x[i], eyler[i]]
@@ -157,7 +174,7 @@ def solve_third_task(node: Node) -> PrettyTable:
 
 
 def main():
-    x_min, x_max, h = 0, 1, 0.1
+    x_min, x_max, h = 0, 1, 0.01
     # x_min, x_max, h = input("Введите: минимум x, максиму x, шаг: ").split()
 
     node = Node(x_min=x_min, x_max=x_max, h=h)

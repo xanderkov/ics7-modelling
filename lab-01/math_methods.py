@@ -3,16 +3,13 @@ from models import Node, Numerical
 import numpy as np
 
 
-def solve_euler(
-    node: Node, x0: float, y0: float, f: Callable[[float, float], float]
-) -> list:
+def solve_euler(node: Node, x: float, y: float, f: Callable[[float, float], float]):
     answer = []
     n = len(np.arange(node.x_min, node.x_max, node.h))
-    x = x0
     for i in range(n):
         try:
-            y0 += node.h * f(x, y0)
-            answer.append(y0)
+            y += node.h * f(x, y)
+            answer.append(y)
             x += node.h
         except:
             answer.append("Переполнение")
