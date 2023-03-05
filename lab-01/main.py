@@ -1,57 +1,7 @@
 from prettytable import PrettyTable
 import numpy as np
-import math
-from typing import Callable
-from dataclasses import dataclass
-
-
-@dataclass
-class Node:
-    x_min: float
-    x_max: float
-    h: float
-
-
-@dataclass
-class Numerical:
-    f_eyler: Callable[[float, float], float]
-    approx_picar_1: Callable[[float, float], float]
-    approx_picar_2: Callable[[float], float]
-    approx_picar_3: Callable[[float], float]
-    approx_picar_4: Callable[[float], float]
-
-
-def solve_euler(
-    node: Node, x0: float, y0: float, f: Callable[[float, float], float]
-) -> list:
-    answer = []
-    n = len(np.arange(node.x_min, node.x_max, node.h))
-    x = x0
-    for i in range(n):
-        try:
-            y0 += node.h * f(x, y0)
-            answer.append(y0)
-            x += node.h
-        except:
-            answer.append("Переполнение")
-
-    return answer
-
-
-def get_anal_solve(node: Node, f: Callable[[float], float]) -> list:
-    anal = []
-    for i in np.arange(node.x_min, node.x_max, node.h):
-        anal.append(f(i))
-    return anal
-
-
-def solve_picar(node: Node, aprox_func: Callable[[float], float]) -> list:
-    picar = []
-    u = 0
-    for x in np.arange(0, np.abs(node.x_max), np.abs(node.h)):
-        picar.append(u)
-        u = aprox_func(x)
-    return picar
+from models import Node, Numerical
+from math_methods import solve_euler, solve_picar, get_anal_solve
 
 
 def get_numerical_methods(node: Node, Numerical: Numerical):
