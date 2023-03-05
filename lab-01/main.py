@@ -18,7 +18,7 @@ def get_numerical_methods(node: Node, Numerical: Numerical, x0: float, y0: float
 def solve_first_task(node: Node) -> PrettyTable:
     task = PrettyTable()
 
-    f_eyler = lambda x, u: x + np.power(u, 2)
+    f_eyler = lambda x, u: 1 / (x + np.power(u, 2))
     f_anal = lambda x: 3 * np.exp(x) - x**2 - 2 * x - 2
     approx_picar_1 = lambda u: 1 + u + np.power(u, 3) / 3
     approx_picar_2 = (
@@ -69,7 +69,7 @@ def solve_first_task(node: Node) -> PrettyTable:
 def solve_second_task(node: Node) -> PrettyTable:
     task = PrettyTable()
 
-    f_eyler = lambda x, u: np.power(u, 2) + 2 * np.power(u, x)
+    f_eyler = lambda x, u: 1 / (np.power(u, 3) + 2 * x * u)
     f_anal = lambda x: (np.power(x, 2) + 1) / 2
     approx_picar_1 = lambda u: 0.5 + np.power(u, 2) / 2 + np.power(u, 4) / 4
     approx_picar_2 = (
