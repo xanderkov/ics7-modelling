@@ -10,16 +10,17 @@ from src.methods import (
 
 class Circuit:
     
-    def __init__(self, i_arr, to_arr, m_arr, t_arr, sigma_arr):
+    def __init__(self, R_k, i_arr, to_arr, m_arr, t_arr, sigma_arr):
         self.R = 0.35
         self.l_e = 12
         self.L_k = 187 * (10**(-6))
         self.C_k = 268 * (10**(-6))
-        self.R_k = 0.25
+        self.R_k = R_k
         self.U_co = 1400
-        self.i_o = 0.3
+        self.i_o = 3 #0.3
         self.T_w = 2000
-        self.H = 1e-2
+        self.H = 1e-6
+        self.STEP = 1e-3
 
         self.i_arr = i_arr
         self.t0_arr = to_arr
@@ -44,7 +45,7 @@ class Circuit:
         to, m = find_t0_m(i, self.i_arr, self.t0_arr, self.m_arr)
         t_arr2 = []
         sigma_arr2 = []
-        h = self.H
+        h = self.STEP
         z = 0
         z_max = 1
         while z < z_max + h:
@@ -69,8 +70,8 @@ class Circuit:
         t_n = to
 
         t_res = [to]
-        i_res = [self.i_o]
-        u_res = [self.U_co]
+        i_res = [i_n]
+        u_res = [u_n]
         r0 = self.find_r(self.i_o)
         to = find_t0_m(self.i_o, self.i_arr, self.t0_arr, self.m_arr)
         r_res = [r0]

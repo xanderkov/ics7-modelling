@@ -17,7 +17,9 @@ def find_t0_m(i, i_arr, to_arr, m_arr):
         to = to_arr[n - 1]
         return to, m
 
-    while i_arr[j] > i or j == n - 2:
+    while True:
+        if i_arr[j] > i or j == n - 2:
+            break
         j += 1
     j -= 1
 
