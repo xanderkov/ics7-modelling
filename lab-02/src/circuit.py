@@ -73,7 +73,7 @@ class Circuit:
         i_res = [i_n]
         u_res = [u_n]
         r0 = self.find_r(self.i_o)
-        to = find_t0_m(self.i_o, self.i_arr, self.t0_arr, self.m_arr)
+        to, m = find_t0_m(self.i_o, self.i_arr, self.t0_arr, self.m_arr)
         r_res = [r0]
         to_res = [to]
 
@@ -96,7 +96,7 @@ class Circuit:
             u_n = u_n + (q1 + 2 * q2 + 2 * q3 + q4) / 6
 
             r_p = self.find_r(i_n)
-            to = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
+            to, m = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
 
             t_res.append(t_n)
             i_res.append(i_n)
@@ -144,7 +144,7 @@ class Circuit:
         i_res = [i_n]
         u_res = [u_n]
         r0 = self.find_r(i_n)
-        t0 = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
+        t0, m = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
         r_res = [r0]
         t0_res = [t0]
 
@@ -160,7 +160,7 @@ class Circuit:
 
             r0 = self.find_r(i_n)
             
-            t0 = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
+            t0, m = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
 
             t_res.append(t_n)
             i_res.append(i_n)
@@ -203,7 +203,7 @@ class Circuit:
         i_res = [i_n]
         u_res = [u_n]
         r0 = self.find_r(i_n)
-        t0 = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
+        t0, m = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
         r_res = [r0]
         t0_res = [t0]
 
@@ -216,7 +216,7 @@ class Circuit:
             u_n = u_n + q1
 
             r_p = self.find_r(i_n)
-            t0 = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
+            t0, m = find_t0_m(i_n, self.i_arr, self.t0_arr, self.m_arr)
             t_res.append(t_n)
             i_res.append(i_n)
             u_res.append(u_n)
