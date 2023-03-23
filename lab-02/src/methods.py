@@ -12,10 +12,10 @@ def find_t0_m(i, i_arr, to_arr, m_arr):
         m = m_arr[0]
         to = to_arr[0]
         return to, m
-    elif i > i_arr[n - 1]:
-        m = m_arr[n - 1]
-        to = to_arr[n - 1]
-        return to, m
+    #elif i > i_arr[n - 1]:
+    #    m = m_arr[n - 1]
+    #    to = to_arr[n - 1]
+    #    return to, m
 
     while True:
         if i_arr[j] > i or j == n - 2:

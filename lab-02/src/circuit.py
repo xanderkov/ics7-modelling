@@ -10,7 +10,7 @@ from src.methods import (
 
 class Circuit:
     
-    def __init__(self, R_k, i_arr, to_arr, m_arr, t_arr, sigma_arr):
+    def __init__(self, R_k, H, i_arr, to_arr, m_arr, t_arr, sigma_arr):
         self.R = 0.35
         self.l_e = 12
         self.L_k = 187 * (10**(-6))
@@ -19,7 +19,7 @@ class Circuit:
         self.U_co = 1400
         self.i_o = 3 #0.3
         self.T_w = 2000
-        self.H = 1e-6
+        self.H = H
         self.STEP = 1e-3
 
         self.i_arr = i_arr
@@ -170,28 +170,29 @@ class Circuit:
 
         return t_res, i_res, u_res, r_res, t0_res
 
-    def runge2(self, i0, u0, h, t0=0, t_max=0.01, beta=1 / 2):
-        i_n = i0
-        u_n = u0
+    def runge2(self, t0=0, t_max=0.01, beta=1 / 2):
+        i_n = self.i_o
+        u_n = self.U_co
         t_n = t0
 
         t_res = [t0]
-        i_res = [i0]
-        u_res = [u0]
+        i_res = [i_n]
+        u_res = [u_n]
 
         while t_n < t_max:
-            k1 = h * self.di_dt(i_n, u_n)
-            q1 = h * self.phi(i_n)
-            k2 = h * self.di_dt(i_n + k1 / (2 * beta), u_n + q1 / (2 * beta))
-            q2 = h * self.phi(i_n + k1 / (2 * beta))
+            k1 = self.H * self.di_dt(i_n, u_n)
+            q1 = self.H * self.phi(i_n)
+            k2 = self.H * self.di_dt(i_n + k1 / (2 * beta), u_n + q1 / (2 * beta))
+            q2 = self.H * self.phi(i_n + k1 / (2 * beta))
 
-            t_n = t_n + h
+            t_n = t_n + self.H
             i_n = i_n + (1 - beta) * k1 + beta * k2
             u_n = u_n + (1 - beta) * q1 + beta * q2
 
             t_res.append(t_n)
             i_res.append(i_n)
             u_res.append(u_n)
+        return t_res, i_res, u_res
 
     def euler_with_r(self, t0=0, t_max=0.01):
         i_n = self.i_o
@@ -224,7 +225,7 @@ class Circuit:
 
         return t_res, i_res, u_res, r_res, t0_res
 
-    def euler(self, h, t0=0, t_max=0.01):
+    def euler(self, t0=0, t_max=0.01):
         i_n = self.i_o
         u_n = self.U_co
         t_n = t0
@@ -234,10 +235,10 @@ class Circuit:
         u_res = [u_n]
 
         while t_n < t_max:
-            k1 = h * self.di_dt(i_n, u_n)
-            q1 = h * self.phi(i_n)
+            k1 = self.H * self.di_dt(i_n, u_n)
+            q1 = self.H * self.phi(i_n)
 
-            t_n = t_n + h
+            t_n = t_n + self.H
             i_n = i_n + k1
             u_n = u_n + q1
 
