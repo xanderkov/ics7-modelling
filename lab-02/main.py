@@ -87,7 +87,7 @@ def main():
         plt.plot(x_res, y_res, colors[0])
 
     elif choose == 5:
-        x_res, y_res, z_res = circuit.runge4(0, MAX)
+        x_res, y_res, z_res = circuit.runge4(0, 0.01)
         plt.title("I(t) RK4 Rp+Rk=0")
         plt.plot(x_res, y_res, colors[0])
 

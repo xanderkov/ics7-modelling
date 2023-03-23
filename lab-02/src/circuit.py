@@ -111,9 +111,9 @@ class Circuit:
         u_n = self.U_co
         t_n = t0
 
-        t_res = [u_n]
+        t_res = [t_n]
         i_res = [i_n]
-        u_res = [t_n]
+        u_res = [u_n]
 
         while t_n < t_max:
             k1 = self.H * self.di_dt(i_n, u_n)
