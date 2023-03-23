@@ -9,6 +9,7 @@ def menu():
     print("2) Calculate by Runge2")
     print("3) Calculate by Runge4")
     print("4) Calculate by Runge4 Rk=200")
+    print("5) Calculate by Runge4 Rk+Rp=0")
 
 
 def main():
@@ -29,7 +30,7 @@ def main():
 
     menu()
 
-    choose = int(input("Choose numbers (1 - 4): "))
+    choose = int(input("Choose numbers (1 - 5): "))
     fig, axes = plt.subplots(nrows=2, ncols=3, sharex=False, sharey=False, figsize=(10, 10))
     ax1, ax2, ax3, ax4, ax5, ax6 = axes.flatten()
     colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:black']
@@ -80,11 +81,15 @@ def main():
         ax5.plot(x_res, t_res, colors[4])
 
     elif choose == 4:
-
         circuit = Circuit(200, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
         x_res, y_res, z_res, r_res, t_res = circuit.runge4_with_r(0, 20 * 1e-6)
-        ax1.set_title("I(t) (R_k = 200) RK4")
-        ax1.plot(x_res, y_res, colors[0])
+        plt.title("I(t) (R_k = 200) RK4")
+        plt.plot(x_res, y_res, colors[0])
+
+    elif choose == 5:
+        x_res, y_res, z_res = circuit.runge4(0, MAX)
+        plt.title("I(t) RK4 Rp+Rk=0")
+        plt.plot(x_res, y_res, colors[0])
 
     plt.show()
 
