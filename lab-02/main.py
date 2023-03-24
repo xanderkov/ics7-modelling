@@ -18,7 +18,7 @@ def main():
     answer = PrettyTable()
 
     MIN = 0.01
-    MAX = 600 * 1e-6
+    MAX = 800 * 1e-6
 
     i_arr = list(table1.I.array)
     t0_arr = list(table1.T0.array)
@@ -89,8 +89,8 @@ def main():
         plt.plot(x_res, y_res, colors[0])
 
     elif choose == 5:
-        circuit = Circuit(0.02, 1e-4, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
-        x_res, y_res, z_res = circuit.euler(0, 0.01)
+        circuit = Circuit(-0.35, 1e-4, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
+        x_res, y_res, z_res = circuit.runge4(0, 0.01)
         plt.title("I(t) RK4 Rp+Rk=0")
         plt.plot(x_res, y_res, colors[0])
 

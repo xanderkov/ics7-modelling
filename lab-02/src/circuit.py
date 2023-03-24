@@ -3,7 +3,6 @@ import numpy as np
 from src.methods import (
     find_t0_m,
     find_sigma,
-    integral,
 
 )
 
@@ -20,7 +19,7 @@ class Circuit:
         self.i_o = 3 #0.3
         self.T_w = 2000
         self.H = H
-        self.STEP = 1e-3
+        self.STEP = 1e-2
 
         self.i_arr = i_arr
         self.t0_arr = to_arr
@@ -48,15 +47,30 @@ class Circuit:
         h = self.STEP
         z = 0
         z_max = 1
+        z_arr = [z]
         while z < z_max + h:
             t = self.t_func(to, z, m)
             sigma = find_sigma(t, self.t_arr, self.sigma_arr)
             t_arr2.append(t)
             sigma_arr2.append(sigma)
             z = z + h
-        s = integral(t_arr2, sigma_arr2)
+            z_arr.append(z)
+        s = self.integral(t_arr2, sigma_arr2, z_arr, to, m)
         r = self.r_func(s)
         return r
+    
+    # Trapetions
+    def integral(self, t_arr, sigma_arr, z_arr, t0, m):
+        l = len(t_arr)
+        s = 0
+        t2 = self.t_func(t0, 0, m)
+        s2 = find_sigma(t2, t_arr, sigma_arr)
+        for i in range(l - 1):
+            t2 = self.t_func(t0, z_arr[i + 1], m)
+            s1 = s2
+            s2 = find_sigma(t2, t_arr, sigma_arr)
+            s += ((s2 + s1) / 2) * (z_arr[i + 1] - z_arr[i]) * ((z_arr[i + 1] + z_arr[i]) / 2)
+        return s
 
     def di_dt_func(self, i: float, u: float, r_res: float):
         return (u - (self.R_k + r_res) * i) / self.L_k
