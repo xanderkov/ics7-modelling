@@ -19,7 +19,7 @@ class Circuit:
         self.i_o = 3 #0.3
         self.T_w = 2000
         self.H = H
-        self.STEP = 1e-2
+        self.STEP = 1 / 30
 
         self.i_arr = i_arr
         self.t0_arr = to_arr

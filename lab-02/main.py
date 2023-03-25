@@ -26,7 +26,7 @@ def main():
     t_arr = list(table2.TK.array)
     sigma_arr = list(table2.Delta.array)
 
-    circuit = Circuit(0.25, 1e-5, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
+    circuit = Circuit(0.25, 1e-4, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
 
     menu()
 
@@ -83,13 +83,13 @@ def main():
         ax5.plot(x_res, t_res, colors[4])
 
     elif choose == 4:
-        circuit = Circuit(200, 1e-6, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
-        x_res, y_res, z_res, r_res, t_res = circuit.runge4_with_r(0, 20 * 1e-6)
+        circuit = Circuit(200, 0.5 * 1e-6, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
+        x_res, y_res, z_res, r_res, t_res = circuit.runge2_with_r(0, 0.2 * 1e-4)
         plt.title("I(t) (R_k = 200) RK4")
         plt.plot(x_res, y_res, colors[0])
 
     elif choose == 5:
-        circuit = Circuit(-0.35, 1e-4, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
+        circuit = Circuit(-0.35, 1e-6, i_arr, t0_arr, m_arr, t_arr, sigma_arr)
         x_res, y_res, z_res = circuit.runge4(0, 0.01)
         plt.title("I(t) RK4 Rp+Rk=0")
         plt.plot(x_res, y_res, colors[0])
