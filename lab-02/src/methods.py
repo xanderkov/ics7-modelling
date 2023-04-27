@@ -49,7 +49,7 @@ def find_sigma(t, t_arr, sigma_arr):
         return sigma
 
     elif t > t_arr[n - 1]:
-        sigma = sigma_arr[n]
+        sigma = sigma_arr[n - 1]
         return sigma
 
     while True:
@@ -74,13 +74,7 @@ def find_sigma(t, t_arr, sigma_arr):
     return sigma
 
 
-# Trapetions
-def integral(arr1, arr2):
-    l = len(arr1)
-    s = 0
-    for i in range(l - 1):
-        s += ((arr2[i] + arr2[i + 1]) / 2) * (arr1[i + 1] - arr1[i])
-    return s
+
 
 
 def interpolation(x_arr, y_arr, h):
