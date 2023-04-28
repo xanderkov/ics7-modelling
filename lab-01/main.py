@@ -174,7 +174,7 @@ def solve_third_task(node: Node) -> PrettyTable:
 
 
 def main():
-    x_min, x_max, h = 0, 1, 0.01
+    x_min, x_max, h = 0, 2.1, 0.01
     # x_min, x_max, h = input("Введите: минимум x, максиму x, шаг: ").split()
 
     node = Node(x_min=x_min, x_max=x_max, h=h)
