@@ -1,5 +1,6 @@
 from math import log
 
+
 class TableReader:
     def __init__(self, filename=None, arr=None):
         self.filename = filename

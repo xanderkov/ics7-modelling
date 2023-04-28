@@ -1,4 +1,4 @@
-from utils import *
+from tridiagonal import TridiagonalMethod
 from numpy import arange
 import matplotlib.pyplot as plt
 
@@ -34,9 +34,11 @@ def graph(num=1, spt = None, spi = None):
 
 
 def graph1():
+    tridiagonal = TridiagonalMethod()
+    T_sp, z_sp = tridiagonal.start_tridiagonal()
     fig = plt.figure(figsize=(10, 7))
     plot = fig.add_subplot()
-    plot.plot(z_sp, T_sp,  label = "T", c = 'r')
+    plot.plot(z_sp, T_sp,  label="T", c='b')
     img_routine(plot, "Температура T, K")
     return
 
