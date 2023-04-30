@@ -36,6 +36,7 @@ def graph(num=1, spt = None, spi = None):
 def graph1():
     tridiagonal = TridiagonalMethod()
     T_sp, z_sp = tridiagonal.start_tridiagonal()
+    print(T_sp[-1])
     fig = plt.figure(figsize=(10, 7))
     plot = fig.add_subplot()
     plot.plot(z_sp, T_sp,  label="T", c='b')
