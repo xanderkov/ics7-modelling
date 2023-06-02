@@ -222,7 +222,7 @@ def get_A2(z, ys, ynext, tau):
         A[n] *= tau
     A[N] = A[N]*tau + h/4*(c(ynext[N]) + c(ynext[N-1]))/2
     # Раскоментить, если T в левом крае константа
-    # A[N] = 0
+    A[N] = 0
     return A
 
 def get_B2(z, ys, ynext, tau):
@@ -235,7 +235,7 @@ def get_B2(z, ys, ynext, tau):
     B[N] *= -1
     #раскомментить, если нужно задание 5
     # B[0] = -1
-    # B[N] = -1
+    B[N] = -1
     return B
 
 def get_E2(z, ys, ynext, tau):
@@ -257,7 +257,7 @@ def get_D2(z, ys,ynext,tau, t):
     D[N] *=-1
     #раскомментить, если нужно задание 5
     # D[0] = -2000
-    # D[N] = -1000
+    D[N] = -3300
     return D
 
 def progon(z, ys, ynext, tau, t):

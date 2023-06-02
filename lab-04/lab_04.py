@@ -22,8 +22,9 @@ def graph2(z_sp, res, tm, tau, m):
     fig = plt.figure(figsize=(10, 7)) 
     plot = fig.add_subplot()
     sp = [tau*i for i in range(int(m))]
-    sp2 = [i[0] for i in res]
-    plot.plot(sp, sp2,  label = "T[0]", c = "m")
+    sp2 = [i[1] for i in res]
+    new_sp2 = [i // 11 for i in sp2]
+    plot.plot(sp, new_sp2,  label = "T[0]", c = "m")
     img_routine(plot, "Температура T[0], K","t, мкс")
     return
 
@@ -32,8 +33,9 @@ def graph1(z_sp, res, tau):
     h = (M) // n
     fig = plt.figure(figsize=(10, 7)) 
     plot = fig.add_subplot()
+    new_res = [[j // 11 for j in i] for i in res]
     for k in range(n):
-        plot.plot(z_sp, res[1 + h * k],  label = "t = " + str((1 + h * k) * tau))
+        plot.plot(z_sp, new_res[1 + h * k],  label = "t = " + str((1 + h * k) * tau))
     img_routine(plot, "Температура T, K", "z, б/р")
     return
 
@@ -70,7 +72,7 @@ def main():
     m = 0
     T_sp = [T_start] * (N + 1)
     res = []
-    z_sp = arange(r0/R, 1+EPS, h)
+    z_sp = arange(r0/R, 1 +EPS, h)
     while m < M:
         res.append(T_sp)
         print("m = ",m)
